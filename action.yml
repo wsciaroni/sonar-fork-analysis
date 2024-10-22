@@ -11,6 +11,9 @@ inputs:
     description: 'The Sonar token used to authenticate with the Sonar API.'
   project-key:
     description: 'The project''s unique key assigned by Sonar.'
+  working-directory:
+    description: 'The directory to run all the jobs from'
+    default: './'
 branding:
   icon: search
   color: blue
@@ -154,3 +157,4 @@ runs:
         ${{ github.event.workflow_run.event == 'pull_request' && format('{0}{1}', '-Dsonar.pullrequest.key=', env.pr_number) || '' }}
         ${{ github.event.workflow_run.event == 'pull_request' && format('{0}{1}', '-Dsonar.pullrequest.branch=', env.pr_head_ref) || '' }}
         ${{ github.event.workflow_run.event == 'pull_request' && format('{0}{1}', '-Dsonar.pullrequest.base=', env.pr_base_ref) || '' }}
+      working-directory: ${{ inputs.working-directory }}
