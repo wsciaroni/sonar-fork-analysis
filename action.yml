@@ -77,16 +77,19 @@ runs:
     - name: 'Infer build type'
       if: github.event_name == 'workflow_run'
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       run: echo "build_type=$(test -f pom.xml && echo maven || echo gradle)" >> "$GITHUB_ENV"
 
     - name: 'Infer build command - Maven'
       if: github.event_name == 'workflow_run' && env.build_type == 'maven'
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       run: echo "build_command=$(test -f mvnw && echo ./mvnw || echo mvn)" >> "$GITHUB_ENV"
 
     - name: 'Infer build command - Gradle'
       if: github.event_name == 'workflow_run' && env.build_type == 'gradle'
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       run: echo "build_command=$(test -f gradlew && echo ./gradlew || echo gradle)" >> "$GITHUB_ENV"
 
     - name: 'Set up Java'
